@@ -8,8 +8,8 @@ Description :
 Created on : 13-APR-2023
 Updated on : 17-APR-2023
 
-hb_in  - GPIO 12. Listens for a heartbeat signal from Pi.
-hb_out - GPIO 13. Sends hearbeat ack signal to Pi.
+hb_in      - GPIO 12. Listens for a heartbeat signal from Pi.
+hb_out     - GPIO 13. Sends hearbeat ack signal to Pi.
 signal_in  - GPIO Pin 14. Fan state signal from Raspberry Pi to Pico.
 signal_out - GPIO Pin 15. Trigger from Pico to relay indicating state.
 """

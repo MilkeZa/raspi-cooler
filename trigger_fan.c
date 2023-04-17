@@ -20,15 +20,15 @@ Updated on : 17-APR-2023
 Args
 -----
 argv[1] : float [required]
-    CPU Temperature. If cpuTEMP>=TRIGGER_TEMP, set fan state to 1.
+    Approximate cpu temperature. If cpuTEMP>=TRIGGER_TEMP, set fan state to 1.
 */
 
-#define TRIGGER_OUT 4    // GPIO pin tied to Pico fan state trigger pin.
-#define HB_DELAY 0.1f    // Delay in seconds after setting HB_OUT to HIGH before checking response.
-#define HB_OUT 17        // GPIO pin that sends hearbeat signal to Pico.
-#define HB_IN 27         // GPIO pin that listens for heartbeat response from Pico.
+#define TRIGGER_OUT 4   // GPIO pin tied to Pico fan state trigger pin.
+#define TRIGGER_TEMP 40 // Temperature that fan is triggered at.
 
-#define TRIGGER_TEMP 40  // Temperature that fan is triggered at.
+#define HB_OUT 17       // GPIO pin that sends hearbeat signal to Pico.
+#define HB_IN 27        // GPIO pin that listens for heartbeat response from Pico.
+#define HB_DELAY 0.1f   // Delay in seconds after setting HB_OUT to HIGH before checking response.
 
 bool heartbeat();
 
