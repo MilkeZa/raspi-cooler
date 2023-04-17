@@ -9,9 +9,9 @@ Created on : 13-APR-2023
 Updated on : 17-APR-2023
 
 hb_in      - GPIO 12. Listens for a heartbeat signal from Pi.
-hb_out     - GPIO 13. Sends hearbeat ack signal to Pi.
-signal_in  - GPIO Pin 14. Fan state signal from Raspberry Pi to Pico.
-signal_out - GPIO Pin 15. Trigger from Pico to relay indicating state.
+hb_out     - GPIO 13. Sends hearbeat acknowledge signal to Pi.
+signal_in  - GPIO 14. Fan state signal from Raspberry Pi to Pico.
+signal_out - GPIO 15. Trigger from Pico to relay indicating state.
 """
 
 
@@ -22,6 +22,8 @@ from machine import Pin
 
 def handle_fan_state(state_check_delay: int = 250):
     """ This method handles the fan state logic and triggering of the relay.
+    If the value of the input pin is HIGH, open the relay, allowing current to
+    flow to the fan, otherwise, close it.
 
     Params
     -----
@@ -33,10 +35,8 @@ def handle_fan_state(state_check_delay: int = 250):
     sig_in, sig_out = Pin(14, Pin.IN), Pin(15, Pin.OUT)
     while True:
         if sig_in.value() == 1:
-            # print("Fan is on.")
             sig_out.value(1)
         else:
-            # print("Fan is off.")
             sig_out.value(0)
         sleep_ms(state_check_delay)
 
@@ -55,10 +55,8 @@ def handle_heartbeat(ack_reset_delay: int = 250):
     hb_in, hb_out = Pin(12, Pin.IN), Pin(13, Pin.OUT)
     while True:
         if hb_in.value() == 1:
-            # print("Heartbeat received, hb_out set to HIGH", end='')
             hb_out.value(1)
             sleep_ms(ack_reset_delay)
-            # print(f"hb_out reset to LOW after {ack_reset_delay}ms")
             hb_out.value(0)
 
 
@@ -69,7 +67,7 @@ def start() -> None:
     try:
         core1_thread = start_new_thread(handle_heartbeat, ())
         handle_fan_state()
-    except KeyboardInterrupt:
+    except Exception:
         return
 
 
